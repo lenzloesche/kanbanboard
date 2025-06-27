@@ -169,7 +169,7 @@ option:checked {
 }
 .task-display {    
     width:600px;
-    height:400px;
+    height:300px;
     position: sticky;
     display: flex;
     flex-direction: column;
