@@ -7,7 +7,7 @@ export default{
     data(){
     return {
       columns:columnsJS,
-      columnsTitle:columnsTitleJS,      
+      columnsTitle:columnsTitleJS,
     }
   },
 
@@ -25,8 +25,10 @@ export default{
         startDrag: Function,
         handleTitleClick: Function,
         onDropColumn: Function,
-    }
-}
+    },
+
+};
+
 </script>
 
 <template>
@@ -45,12 +47,12 @@ export default{
             </div>
             <div class="task-bottom-margin" @drop="onDropColumn($event, colum)" @dragover.prevent @dragenter.prevent></div>
           </td>
-      </tr>
-      <tr>
+        </tr>
+        <tr>
           <td v-for="title in columnsTitle" :key="title" class="bottom"> - </td>
         </tr>
       </tbody>
-    </table>
+    </table>   
 </template>
 
 <style>
@@ -61,6 +63,7 @@ export default{
   margin-left: 2%;
   margin-right: 2%;
 }
+
 .title{
   font-size:x-large;
   font-weight: bold;

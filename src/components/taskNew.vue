@@ -170,7 +170,7 @@ option:checked {
 .task-display {    
     width:600px;
     height:400px;
-    position: fixed;
+    position: sticky;
     display: flex;
     flex-direction: column;
     background-color: rgba(255, 250, 250,0);
@@ -184,13 +184,12 @@ option:checked {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     background: rgba(0, 0, 0, 0.4);    
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1000;
-    
 }
 </style>

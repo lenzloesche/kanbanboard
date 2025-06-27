@@ -21,7 +21,7 @@ export default{
       <h1 class="website-title"> Kanban Board</h1>
       <div class="vertical-line"></div>
       <Button @button-click="handlePlusClick" :buttonSize="30" >+</Button>
-      <Button @button-click="handleSwitchClick" :buttonSize="24" >Change View</Button>
+      <Button @button-click="handleSwitchClick" :buttonSize="24" class="change-view" >Change View</Button>
       <Button @button-click="handleDarkClick" :buttonSize="30">
         <img v-if="!isDark" src="./../assets/moon_dark.png" height="20" alt="Mond"/>
         <img v-if="!isDark" src="./../assets/sun_dark.png" height="20" alt="Sonne"/>
@@ -42,16 +42,24 @@ export default{
     justify-content: flex-start;
     margin-bottom: 8px;    
 }
+
 .dark .top-flex{
   color:white;
   background-color: rgb(39, 43, 48);
 }
+
 .website-title{
   padding-left: 34px;  
   font-size:xx-large;
   font-weight: bold;
   color:white;
+  overflow: hidden;
 }
+
+.change-view{
+  overflow: hidden;
+}
+
 .vertical-line {
   width: 4px;
   margin-left: 14px;

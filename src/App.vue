@@ -16,6 +16,7 @@ export default {
       fakeTask:fakeTaskJS,
       editTask:editTaskJS,
       tasks: JSON.parse(JSON.stringify(tasksJS)),
+      isMobile: false,   
     }
   },
 
@@ -28,6 +29,8 @@ export default {
     ListView,
   },
   mounted() {
+    this.checkIsMobile();
+      window.addEventListener('resize', this.checkIsMobile);
     const saved = localStorage.getItem('kanBanTasks');
     this.tasks = saved ? JSON.parse(saved) : this.tasks;
     const savedDarkMode = localStorage.getItem('kanBanDarkMode');
@@ -46,6 +49,17 @@ export default {
           localStorage.setItem('kanBanDarkMode', JSON.stringify(newList));
         },
         deep: true
+      },
+      showNewTask(newVal) {
+        if (newVal) {
+          this.$nextTick(() => {
+            const rotated = document.querySelector('.main-rotated');
+            if (rotated) {
+              rotated.scrollLeft = 0;
+              rotated.scrollTop = 0;
+            }
+          });
+        }
       }
     },
 
@@ -185,7 +199,9 @@ export default {
         this.editTask=this.tasks[this.tasks.length-1];
     },
 
-    
+    checkIsMobile() {
+        this.isMobile = window.innerWidth < 800
+    },
 
     handleDelete(id){
       const taskPosition = this.tasks.findIndex((task)=>task.id===id);
@@ -200,32 +216,40 @@ export default {
       this.showBoard = !this.showBoard;
     },
 
-  },  
+  }, 
+      beforeDestroy() {
+      window.removeEventListener('resize', this.checkIsMobile);
+    } 
 }
 </script>
 
 <template>
-  <div  :class="{ dark: isDark }" class="main">
-    <div  class="main-child">
+  <div :class="{dark: isDark, 'main-rotated': isMobile, 'main': !isMobile, 'overflow-hidden': showNewTask}">
+    <div class="main-child">
       <topBar :handlePlusClick="handlePlusClick" :isDark="isDark" :handleDarkClick="handleDarkClick" :handleSwitchClick="handleSwitchClick"></topBar>
-      <TaskNew :newTask="editTask.id" :currentTask="editTask" :isDark="isDark" v-if="showNewTask"  @close="showNewTask = false" @delete="handleDelete(editTask.id); showNewTask = false;"/>
+      <TaskNew v-if="showNewTask" :newTask="editTask.id" :currentTask="editTask" :isDark="isDark"  @close="showNewTask = false" @delete="handleDelete(editTask.id); showNewTask = false;"/>
       <KanbanTable v-if="showBoard" :returnTask="returnTask" :onTaskDrop="onTaskDrop" :startDrag="startDrag" :handleTitleClick="handleTitleClick" :onDropColumn="onDropColumn"></KanbanTable>
       <ListView v-else :tasks="tasks" :handleTitleClick="handleTitleClick"></ListView>
-      <div class="bottom-flex">
-      </div>
+      <div v-if="!isMobile" class="bottom-flex"></div>
     </div>
   </div>
 </template>
 <style>
 
+.overflow-hidden {
+  overflow:hidden !important;
+  overflow-block:hidden !important;
+}
 
 body {
   background-color: rgb(255, 255, 255);
   user-select: none;
 }
+
 .dark body {
   background-color: black;
 }
+
 .main {
   height: 100vh;
   width:100%;
@@ -233,6 +257,22 @@ body {
   box-sizing: border-box;
 }
 
+.main-rotated {
+    transform: rotate(-90deg)  translateX(-100%);
+    transform-origin: top left;
+    position: absolute;
+    width: 100vh;
+    height: 100vw;
+    min-width: 100vh;
+    min-height: 100vw;
+    max-width: 100vh;
+    max-height: 100vw;
+    margin:0;
+    background-color: white;
+    box-sizing: border-box;
+    overflow-block:auto;
+  }
+  
 .main-child {
   width:96%;
 }
@@ -240,14 +280,16 @@ body {
 .dark {
   background: rgb(88, 96, 103);
 }
+
 .margin-left {
   margin-left: 20px;
 }
+
 .bottom-flex {
     position: fixed;
     margin-top: auto; 
-    bottom:0;
-    left:0;
+    bottom:0px;
+    left:0px;
     width: 100%;
     height: 44px;
     background-color: rgb(0, 57, 82);
@@ -256,16 +298,19 @@ body {
     justify-content: flex-start;
     margin-top: 8px;       
 }
+
 .dark .bottom-flex{
   color:white;
   background-color: rgb(31, 37, 39);
 }
+
 .horizontal-line {
   height: 1px;
   background-color: rgb(0, 0, 0);
   width: 50%;
   align-self: center;
 }
+
 .dark .horizontal-line {
   background-color: white;
 }
