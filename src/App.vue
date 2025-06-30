@@ -261,14 +261,14 @@ body {
   background-color: black;
 }
 .wrapper{
-  position:static;
+  position: absolute;
   width: 100vw;
   height: 100vh;
 }
 
 .main {
   height: 100vh;
-  width:100%;
+  width:100vw;
   background-color: white;
   box-sizing: border-box;
 }
@@ -276,7 +276,6 @@ body {
 .main-rotated {
     transform: rotate(-90deg)  translateX(-100%);
     transform-origin: top left;
-
     width: 100vh;
     height: 100vw;
     min-width: 100vh;
