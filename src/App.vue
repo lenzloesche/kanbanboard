@@ -35,12 +35,8 @@ export default {
     const savedDarkMode = localStorage.getItem('kanBanDarkMode');
     this.isDark = savedDarkMode ? JSON.parse(savedDarkMode) : this.isDark;
     this.screenOrientation(window.screen);
-    this.updateMainRotatedSize();
     window.addEventListener("orientationchange", () => {
       this.screenOrientation(window.screen);
-      setTimeout(() => {
-      this.updateMainRotatedSize();
-    }, 300);    
 
     });
 
@@ -59,6 +55,7 @@ export default {
         },
         deep: true
       },
+
       showNewTask(newVal) {
         if (newVal) {
           this.$nextTick(() => {
@@ -69,6 +66,17 @@ export default {
             }
           });
         }
+      },
+
+      isPortrait(val) {
+        this.$nextTick(() => {
+          const rotated = document.querySelector('.main-rotated');
+          if (rotated) {
+            rotated.style.display = 'none';
+            void rotated.offsetHeight; // force reflow
+            rotated.style.display = '';
+          }
+        });
       }
     },
     
@@ -83,13 +91,7 @@ export default {
               }
             }
           },
-        updateMainRotatedSize() {
-            const rotated = document.querySelector('.main-rotated');
-            if (rotated) {
-              rotated.style.width = `${window.innerHeight}px`;
-              rotated.style.height = `${window.innerWidth}px`;
-            }
-          },
+
       returnShortTitle(title){
           if (title.length>16){
             return title.slice(0,16)+"...";
@@ -241,16 +243,14 @@ export default {
 </script>
 
 <template>
-    <div :class="{ dark: isDark, 'overflow-hidden': showNewTask }">
-      <div ref="rotated" :class="{ 'main-rotated': isPortrait, 'main': !isPortrait }" class="scroll-container">
-        <div class="main-child">
-          <topBar :handlePlusClick="handlePlusClick" :isDark="isDark" :handleDarkClick="handleDarkClick" :handleSwitchClick="handleSwitchClick"></topBar>
-          <TaskNew v-if="showNewTask" :newTask="editTask.id" :currentTask="editTask" :isDark="isDark"  @close="showNewTask = false" @delete="handleDelete(editTask.id); showNewTask = false;"/>
-          <KanbanTable v-if="showBoard" :returnTask="returnTask" :onTaskDrop="onTaskDrop" :startDrag="startDrag" :handleTitleClick="handleTitleClick" :onDropColumn="onDropColumn" :onDropBetweenTasks="onDropBetweenTasks"></KanbanTable>
-          <ListView v-else :tasks="tasks" :handleTitleClick="handleTitleClick"></ListView>
-          <div v-if="!isPortrait" class="bottom-flex"></div>
-        </div>
-      </div>
+  <div :class="{dark: isDark, 'main-rotated': isPortrait, 'main': !isPortrait, 'overflow-hidden': showNewTask}">
+    <div class="main-child">
+      <topBar :handlePlusClick="handlePlusClick" :isDark="isDark" :handleDarkClick="handleDarkClick" :handleSwitchClick="handleSwitchClick"></topBar>
+      <TaskNew v-if="showNewTask" :newTask="editTask.id" :currentTask="editTask" :isDark="isDark"  @close="showNewTask = false" @delete="handleDelete(editTask.id); showNewTask = false;"/>
+      <KanbanTable v-if="showBoard" :returnTask="returnTask" :onTaskDrop="onTaskDrop" :startDrag="startDrag" :handleTitleClick="handleTitleClick" :onDropColumn="onDropColumn" :onDropBetweenTasks="onDropBetweenTasks"></KanbanTable>
+      <ListView v-else :tasks="tasks" :handleTitleClick="handleTitleClick"></ListView>
+      <div v-if="!isPortrait" class="bottom-flex"></div>
+    </div>
   </div>
 </template>
 <style>
