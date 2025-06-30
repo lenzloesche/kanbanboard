@@ -2,6 +2,12 @@
 import Button from './button.vue';
 
 export default {
+    data(){
+        return {
+            up:"🞁",
+            down:"🞃",
+        }
+    },
     props: {
         changeSortingOrder:Function,
         sortingOrder:Object,
@@ -18,8 +24,8 @@ export default {
         <template v-if="sortingOrder.number === orderNumberToChange">{{ sortingOrder.ascending ? "&#128897" : "&#128899" }}                            
         </template>
         <div v-else class="arrow-stack">
-            <div>&#128897</div>
-            <div>&#128899</div>  
+            <div>{{ this.up || '^' }}</div>
+            <div>{{ this.down || '^' }}</div>
         </div>
     </Button>
 </template>
