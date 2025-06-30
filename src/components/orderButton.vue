@@ -4,8 +4,8 @@ import Button from './button.vue';
 export default {
     data(){
         return {
-            up:"🞁",
-            down:"🞃",
+            up:String.fromCodePoint(0x1F781),
+            down:String.fromCodePoint(0x1F783),
         }
     },
     props: {
@@ -25,7 +25,7 @@ export default {
         </template>
         <div v-else class="arrow-stack">
             <div>{{ this.up || '^' }}</div>
-            <div>{{ this.down || '^' }}</div>
+            <div>{{ this.down || 'v' }}</div>
         </div>
     </Button>
 </template>
