@@ -2,6 +2,8 @@
 
 This little Kanban-Project is just a little test to get to know Vue 3.
 
+[Demo](https://kanbanboard-pi-eight.vercel.app/)
+
 ## Recommended IDE Setup
 
 [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
