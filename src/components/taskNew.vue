@@ -17,26 +17,26 @@ export default{
             }
         }
     },
-    watch: {
-        currentTask: {
-            immediate: true,
-            handler(newTask) {
-            this.localTask = { ...newTask }; // Shallow copy
-            }
-        }
+    mounted(){
+        this.localTask = {...this.currentTask};
     },
 
     components: {
     Button
   },
     methods:{
-        handleXClick(){
-            closeWindow= true;
+        handleSaveClick(){
+             this.close = true;
+            for (let key in this.localTask) {
+                this.currentTask[key] = this.localTask[key];
+            }
+            this.$emit('close')
+
         }
     },
     emits:{
         close:false,
-        delete:false,        
+        delete:false,
     },
     props: {
         isDark:false,
@@ -52,7 +52,7 @@ export default{
 }
 </script>
 <template>
-    <div class="task-box" @click.self="$emit('close')">
+    <div class="task-box" @click.self="handleSaveClick">
         <div class="task-display">
             <div class="top-bar">
                 <h2 class="task-title" v-if = "newTask==-1">New Task</h2>
@@ -60,20 +60,18 @@ export default{
                 <Button @click="$emit('close')" class="task-close" :buttonSize="22">X</Button>
             </div>
             <div class="task-content">
-                <input type="text" class="task-input task-input1" v-model="currentTask.title" />
-                <textarea type="text" class="task-input task-input2"  v-model="currentTask.body" > </textarea>                
+                <input type="text" class="task-input task-input1" v-model="localTask.title" />
+                <textarea type="text" class="task-input task-input2"  v-model="localTask.body" > </textarea>                
             </div>
             <div class="bottom-bar">
-                <Button @click="$emit('delete')" :buttonSize="26">
-                    <img v-if="!isDark" src="./../assets/bin_black.png" height="20" alt="Papierkorb"/>
-                    <img v-else src="./../assets/bin.png" height="20" alt="Papierkorb"/>
-                </Button>
+                <Button @click="$emit('delete')" :buttonSize="18">Task Löschen</Button>
                 <div>
                     <label for="status" class="status-size">Status: </label>
-                    <select class="select-styling" v-model="currentTask.column">
+                    <select class="select-styling" v-model="localTask.column">
                         <option v-for="column in columns" :value="column">{{columnsTitle[column]}}</option>
                     </select>
                 </div>
+                <Button @click="handleSaveClick" :buttonSize="18">Speichern</Button>
             </div>
         </div>
     </div>
