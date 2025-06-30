@@ -233,13 +233,15 @@ export default {
 </script>
 
 <template>
-  <div :class="{dark: isDark, 'main-rotated': isPortrait, 'main': !isPortrait, 'overflow-hidden': showNewTask}">
-    <div class="main-child">
-      <topBar :handlePlusClick="handlePlusClick" :isDark="isDark" :handleDarkClick="handleDarkClick" :handleSwitchClick="handleSwitchClick"></topBar>
-      <TaskNew v-if="showNewTask" :newTask="editTask.id" :currentTask="editTask" :isDark="isDark"  @close="showNewTask = false" @delete="handleDelete(editTask.id); showNewTask = false;"/>
-      <KanbanTable v-if="showBoard" :returnTask="returnTask" :onTaskDrop="onTaskDrop" :startDrag="startDrag" :handleTitleClick="handleTitleClick" :onDropColumn="onDropColumn" :onDropBetweenTasks="onDropBetweenTasks"></KanbanTable>
-      <ListView v-else :tasks="tasks" :handleTitleClick="handleTitleClick"></ListView>
-      <div v-if="!isPortrait" class="bottom-flex"></div>
+  <div :class="{dark: isDark, 'wrapper': true, 'overflow-hidden': showNewTask}">
+    <div :class="{dark: isDark, 'main-rotated': isPortrait, 'main': !isPortrait, 'overflow-hidden': showNewTask}">
+      <div class="main-child">
+        <topBar :handlePlusClick="handlePlusClick" :isDark="isDark" :handleDarkClick="handleDarkClick" :handleSwitchClick="handleSwitchClick"></topBar>
+        <TaskNew v-if="showNewTask" :newTask="editTask.id" :currentTask="editTask" :isDark="isDark"  @close="showNewTask = false" @delete="handleDelete(editTask.id); showNewTask = false;"/>
+        <KanbanTable v-if="showBoard" :returnTask="returnTask" :onTaskDrop="onTaskDrop" :startDrag="startDrag" :handleTitleClick="handleTitleClick" :onDropColumn="onDropColumn" :onDropBetweenTasks="onDropBetweenTasks"></KanbanTable>
+        <ListView v-else :tasks="tasks" :handleTitleClick="handleTitleClick"></ListView>
+        <div v-if="!isPortrait" class="bottom-flex"></div>
+      </div>
     </div>
   </div>
 </template>
@@ -258,6 +260,10 @@ body {
 .dark body {
   background-color: black;
 }
+.wrapper{
+  width: 100vw;
+  height: 100vh;
+}
 
 .main {
   height: 100vh;
@@ -269,7 +275,7 @@ body {
 .main-rotated {
     transform: rotate(-90deg)  translateX(-100%);
     transform-origin: top left;
-    position: static;
+    position: absolute;
     width: 100vh;
     height: 100vw;
     min-width: 100vh;
