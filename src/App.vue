@@ -241,14 +241,16 @@ export default {
 </script>
 
 <template>
-  <div :class="{dark: isDark, 'main-rotated': isPortrait, 'main': !isPortrait, 'overflow-hidden': showNewTask}">
-    <div class="main-child">
-      <topBar :handlePlusClick="handlePlusClick" :isDark="isDark" :handleDarkClick="handleDarkClick" :handleSwitchClick="handleSwitchClick"></topBar>
-      <TaskNew v-if="showNewTask" :newTask="editTask.id" :currentTask="editTask" :isDark="isDark"  @close="showNewTask = false" @delete="handleDelete(editTask.id); showNewTask = false;"/>
-      <KanbanTable v-if="showBoard" :returnTask="returnTask" :onTaskDrop="onTaskDrop" :startDrag="startDrag" :handleTitleClick="handleTitleClick" :onDropColumn="onDropColumn" :onDropBetweenTasks="onDropBetweenTasks"></KanbanTable>
-      <ListView v-else :tasks="tasks" :handleTitleClick="handleTitleClick"></ListView>
-      <div v-if="!isPortrait" class="bottom-flex"></div>
-    </div>
+    <div :class="{ dark: isDark, 'overflow-hidden': showNewTask }">
+      <div ref="rotated" :class="{ 'main-rotated': isPortrait, 'main': !isPortrait }" class="scroll-container">
+        <div class="main-child">
+          <topBar :handlePlusClick="handlePlusClick" :isDark="isDark" :handleDarkClick="handleDarkClick" :handleSwitchClick="handleSwitchClick"></topBar>
+          <TaskNew v-if="showNewTask" :newTask="editTask.id" :currentTask="editTask" :isDark="isDark"  @close="showNewTask = false" @delete="handleDelete(editTask.id); showNewTask = false;"/>
+          <KanbanTable v-if="showBoard" :returnTask="returnTask" :onTaskDrop="onTaskDrop" :startDrag="startDrag" :handleTitleClick="handleTitleClick" :onDropColumn="onDropColumn" :onDropBetweenTasks="onDropBetweenTasks"></KanbanTable>
+          <ListView v-else :tasks="tasks" :handleTitleClick="handleTitleClick"></ListView>
+          <div v-if="!isPortrait" class="bottom-flex"></div>
+        </div>
+      </div>
   </div>
 </template>
 <style>
@@ -291,7 +293,13 @@ body {
     overflow:hidden;
     overflow-block:hidden;
   }
-  
+
+.scroll-container {
+  overflow: auto;
+  width: 100%;
+  height: 100%;
+}
+
 .main-child {
   width:96%;
 }
