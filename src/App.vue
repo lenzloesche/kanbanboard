@@ -35,9 +35,12 @@ export default {
     const savedDarkMode = localStorage.getItem('kanBanDarkMode');
     this.isDark = savedDarkMode ? JSON.parse(savedDarkMode) : this.isDark;
     this.screenOrientation(window.screen);
+    this.updateMainRotatedSize();
     window.addEventListener("orientationchange", () => {
       this.screenOrientation(window.screen);
+      this.updateMainRotatedSize();
     });
+
   },
   watch: {
       tasks: {
@@ -77,7 +80,13 @@ export default {
               }
             }
           },
-
+        updateMainRotatedSize() {
+            const rotated = document.querySelector('.main-rotated');
+            if (rotated) {
+              rotated.style.width = `${window.innerHeight}px`;
+              rotated.style.height = `${window.innerWidth}px`;
+            }
+          },
       returnShortTitle(title){
           if (title.length>16){
             return title.slice(0,16)+"...";
@@ -233,7 +242,7 @@ export default {
     <div class="main-child">
       <topBar :handlePlusClick="handlePlusClick" :isDark="isDark" :handleDarkClick="handleDarkClick" :handleSwitchClick="handleSwitchClick"></topBar>
       <TaskNew v-if="showNewTask" :newTask="editTask.id" :currentTask="editTask" :isDark="isDark"  @close="showNewTask = false" @delete="handleDelete(editTask.id); showNewTask = false;"/>
-      <KanbanTable v-if="showBoard" :returnTask="returnTask" :onTaskDrop="onTaskDrop" :startDrag="startDrag" :handleTitleClick="handleTitleClick" :onDropColumn="onDropColumn"></KanbanTable>
+      <KanbanTable v-if="showBoard" :returnTask="returnTask" :onTaskDrop="onTaskDrop" :startDrag="startDrag" :handleTitleClick="handleTitleClick" :onDropColumn="onDropColumn" :onDropBetweenTasks="onDropBetweenTasks"></KanbanTable>
       <ListView v-else :tasks="tasks" :handleTitleClick="handleTitleClick"></ListView>
       <div v-if="!isPortrait" class="bottom-flex"></div>
     </div>
@@ -265,7 +274,7 @@ body {
 .main-rotated {
     transform: rotate(-90deg)  translateX(-100%);
     transform-origin: top left;
-    position: fixed;
+    position: absolute;
     width: 100vh;
     height: 100vw;
     min-width: 100vh;

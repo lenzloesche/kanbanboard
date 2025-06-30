@@ -25,6 +25,7 @@ export default{
         startDrag: Function,
         handleTitleClick: Function,
         onDropColumn: Function,
+        onDropBetweenTasks: Function,
     },
 
 };
