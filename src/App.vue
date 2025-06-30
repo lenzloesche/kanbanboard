@@ -269,11 +269,12 @@ body {
 
 .wrapper-portrait{
   position: absolute;
-      transform: rotate(-90deg)  translateX(-100%);
-    transform-origin: top left;
-  width: 100vh;
-  height: 100vw;
+  transform: rotate(-90deg)  translateX(-100%);
+  transform-origin: top left;
+  width: 96vh;
+  height: 96vw;
 }
+
 .main {
   height: 100vh;
   width:100vw;
@@ -282,7 +283,6 @@ body {
 }
 
 .main-rotated {
-
     width: 95vh;
     height: 100vw;
     min-width: 95vh;
