@@ -87,9 +87,10 @@ export default {
     },
 
     startDrag(evt, task) {
-      evt.dataTransfer.dropEffect = 'move'
-      evt.dataTransfer.effectAllowed = 'move'
-      evt.dataTransfer.setData('taskID', task.id)
+      evt.dataTransfer.dropEffect = 'move';
+      evt.dataTransfer.effectAllowed = 'move';
+      evt.dataTransfer.setData('taskID', task.id);
+      evt.dataTransfer.setData('text/plain', task.id);
     },
 
     changeTaskPosition(taskToChangeID,ColumnToChangeTo,orderToChangeTo){
