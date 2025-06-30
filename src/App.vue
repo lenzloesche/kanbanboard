@@ -67,17 +67,7 @@ export default {
           });
         }
       },
-
-      isPortrait(val) {
-        this.$nextTick(() => {
-          const rotated = document.querySelector('.main-rotated');
-          if (rotated) {
-            rotated.style.display = 'none';
-            void rotated.offsetHeight;
-            rotated.style.display = '';
-          }
-        });
-      }
+      
     },
     
     methods: {
@@ -279,7 +269,7 @@ body {
 .main-rotated {
     transform: rotate(-90deg)  translateX(-100%);
     transform-origin: top left;
-    position: absolute;
+
     width: 100vh;
     height: 100vw;
     min-width: 100vh;
