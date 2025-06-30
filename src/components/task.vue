@@ -10,10 +10,10 @@ export default{
 <template>
     <div class="task-el">
         <div class="task-top">
-            <div class="margin-left text-overflow"><h3 >{{ thisTask.title || "-Kein Titel-"  }}</h3></div>
+            <div class="margin-left text-overflow"><h3 >{{ thisTask.title || "-No Titel-"  }}</h3></div>
             <div class="horizontal-line"></div>                
         </div>              
-        <p class="textblock-overflow">{{ thisTask.body || "-Kein Body-" }}</p>
+        <p class="textblock-overflow">{{ thisTask.body || "-No Body-" }}</p>
     </div>
 </template>
 

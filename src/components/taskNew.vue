@@ -64,14 +64,14 @@ export default{
                 <textarea type="text" class="task-input task-input2"  v-model="localTask.body" > </textarea>                
             </div>
             <div class="bottom-bar">
-                <Button @click="$emit('delete')" :buttonSize="18">Task Löschen</Button>
+                <Button @click="$emit('delete')" :buttonSize="18">Delete Task</Button>
                 <div>
                     <label for="status" class="status-size">Status: </label>
                     <select class="select-styling" v-model="localTask.column">
                         <option v-for="column in columns" :value="column">{{columnsTitle[column]}}</option>
                     </select>
                 </div>
-                <Button @click="handleSaveClick" :buttonSize="18">Speichern</Button>
+                <Button @click="handleSaveClick" :buttonSize="18">Save</Button>
             </div>
         </div>
     </div>
