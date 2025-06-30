@@ -233,7 +233,7 @@ export default {
 </script>
 
 <template>
-  <div :class="{dark: isDark, 'wrapper': true, 'overflow-hidden': showNewTask}">
+  <div :class="{dark: isDark, 'wrapper': isPortrait, 'wrapper-portrait': isPortrait, 'overflow-hidden': showNewTask}">
     <div :class="{dark: isDark, 'main-rotated': isPortrait, 'main': !isPortrait, 'overflow-hidden': showNewTask}">
       <div class="main-child">
         <topBar :handlePlusClick="handlePlusClick" :isDark="isDark" :handleDarkClick="handleDarkClick" :handleSwitchClick="handleSwitchClick"></topBar>
@@ -260,12 +260,20 @@ body {
 .dark body {
   background-color: black;
 }
+
 .wrapper{
   position: absolute;
   width: 100vw;
   height: 100vh;
 }
 
+.wrapper-portrait{
+  position: absolute;
+      transform: rotate(-90deg)  translateX(-100%);
+    transform-origin: top left;
+  width: 100vh;
+  height: 100vw;
+}
 .main {
   height: 100vh;
   width:100vw;
@@ -274,13 +282,12 @@ body {
 }
 
 .main-rotated {
-    transform: rotate(-90deg)  translateX(-100%);
-    transform-origin: top left;
-    width: 100vh;
+
+    width: 95vh;
     height: 100vw;
-    min-width: 100vh;
+    min-width: 95vh;
     min-height: 100vw;
-    max-width: 100vh;
+    max-width: 95vh;
     max-height: 100vw;
     margin:0;
     background-color: white;
