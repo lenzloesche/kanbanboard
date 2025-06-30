@@ -16,7 +16,7 @@ export default {
       fakeTask:fakeTaskJS,
       editTask:editTaskJS,
       tasks: JSON.parse(JSON.stringify(tasksJS)),
-      isMobile: false,   
+      isPortrait: false,   
     }
   },
 
@@ -29,12 +29,14 @@ export default {
     ListView,
   },
   mounted() {
-    this.checkIsMobile();
-      window.addEventListener('resize', this.checkIsMobile);
     const saved = localStorage.getItem('kanBanTasks');
     this.tasks = saved ? JSON.parse(saved) : this.tasks;
     const savedDarkMode = localStorage.getItem('kanBanDarkMode');
     this.isDark = savedDarkMode ? JSON.parse(savedDarkMode) : this.isDark;
+    this.screenOrientation(window.screen);
+    window.addEventListener("orientationchange", () => {
+      this.screenOrientation(window.screen);
+    });
   },
   watch: {
       tasks: {
@@ -62,11 +64,19 @@ export default {
         }
       }
     },
-
-     computed: {
-        
-     },
+    
     methods: {
+       
+      screenOrientation(screen) {
+            if (screen.orientation && screen.orientation.type) {
+              console.log(screen.orientation.type);
+              if (screen.orientation.type.startsWith("portrait")) {
+                this.isPortrait = true;
+              } else {
+                this.isPortrait = false;
+              }
+            }
+          },
 
       returnShortTitle(title){
           if (title.length>16){
@@ -200,9 +210,6 @@ export default {
         this.editTask=this.tasks[this.tasks.length-1];
     },
 
-    checkIsMobile() {
-        this.isMobile = window.innerWidth < 800
-    },
 
     handleDelete(id){
       const taskPosition = this.tasks.findIndex((task)=>task.id===id);
@@ -218,20 +225,18 @@ export default {
     },
 
   }, 
-      beforeDestroy() {
-      window.removeEventListener('resize', this.checkIsMobile);
-    } 
+      
 }
 </script>
 
 <template>
-  <div :class="{dark: isDark, 'main-rotated': isMobile, 'main': !isMobile, 'overflow-hidden': showNewTask}">
+  <div :class="{dark: isDark, 'main-rotated': isPortrait, 'main': !isPortrait, 'overflow-hidden': showNewTask}">
     <div class="main-child">
       <topBar :handlePlusClick="handlePlusClick" :isDark="isDark" :handleDarkClick="handleDarkClick" :handleSwitchClick="handleSwitchClick"></topBar>
       <TaskNew v-if="showNewTask" :newTask="editTask.id" :currentTask="editTask" :isDark="isDark"  @close="showNewTask = false" @delete="handleDelete(editTask.id); showNewTask = false;"/>
       <KanbanTable v-if="showBoard" :returnTask="returnTask" :onTaskDrop="onTaskDrop" :startDrag="startDrag" :handleTitleClick="handleTitleClick" :onDropColumn="onDropColumn"></KanbanTable>
       <ListView v-else :tasks="tasks" :handleTitleClick="handleTitleClick"></ListView>
-      <div v-if="!isMobile" class="bottom-flex"></div>
+      <div v-if="!isPortrait" class="bottom-flex"></div>
     </div>
   </div>
 </template>
