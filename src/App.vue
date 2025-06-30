@@ -73,7 +73,7 @@ export default {
           const rotated = document.querySelector('.main-rotated');
           if (rotated) {
             rotated.style.display = 'none';
-            void rotated.offsetHeight; // force reflow
+            void rotated.offsetHeight;
             rotated.style.display = '';
           }
         });
@@ -290,15 +290,7 @@ body {
     background-color: white;
     box-sizing: border-box;
     overflow-block:auto;
-    overflow:hidden;
-    overflow-block:hidden;
   }
-
-.scroll-container {
-  overflow: auto;
-  width: 100%;
-  height: 100%;
-}
 
 .main-child {
   width:96%;
