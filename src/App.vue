@@ -265,7 +265,7 @@ body {
 .main-rotated {
     transform: rotate(-90deg)  translateX(-100%);
     transform-origin: top left;
-    position: absolute;
+    position: fixed;
     width: 100vh;
     height: 100vw;
     min-width: 100vh;
