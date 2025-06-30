@@ -263,8 +263,8 @@ body {
 
 .wrapper{
   position: absolute;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
 }
 
 .wrapper-portrait{
@@ -276,8 +276,8 @@ body {
 }
 
 .main {
-  height: 100vh;
-  width:100vw;
+  height: 100%;
+  width: 100%;
   background-color: white;
   box-sizing: border-box;
 }
