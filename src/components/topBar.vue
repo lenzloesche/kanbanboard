@@ -20,9 +20,9 @@ export default{
     <div class="top-flex">
       <h1 class="website-title"> Kanban Board</h1>
       <div class="vertical-line"></div>
-      <Button @button-click="handlePlusClick" :buttonSize="30" >+</Button>
+      <Button @button-click="handlePlusClick" :buttonSize="28" >+</Button>
       <Button @button-click="handleSwitchClick" :buttonSize="24" class="change-view" >Change View</Button>
-      <Button @button-click="handleDarkClick" :buttonSize="30">
+      <Button @button-click="handleDarkClick" :buttonSize="28">
         <img v-if="!isDark" src="./../assets/moon_dark.png" height="20" alt="Mond"/>
         <img v-if="!isDark" src="./../assets/sun_dark.png" height="20" alt="Sonne"/>
         <img v-if="isDark" src="./../assets/moon.png" height="20" alt="Mond"/>
