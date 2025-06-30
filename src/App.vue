@@ -288,6 +288,8 @@ body {
     background-color: white;
     box-sizing: border-box;
     overflow-block:auto;
+    overflow:hidden;
+    overflow-block:hidden;
   }
   
 .main-child {
