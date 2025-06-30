@@ -4,8 +4,8 @@ import Button from './button.vue';
 export default {
     data(){
         return {
-            up:String.fromCodePoint(0x1F781),
-            down:String.fromCodePoint(0x1F783),
+            up:String.fromCodePoint(0x1F781) || "^",
+            down:String.fromCodePoint(0x1F783) || "v",
         }
     },
     props: {
@@ -24,8 +24,8 @@ export default {
         <template v-if="sortingOrder.number === orderNumberToChange">{{ sortingOrder.ascending ? "&#128897" : "&#128899" }}                            
         </template>
         <div v-else class="arrow-stack">
-            <div>{{ this.up || '^' }}</div>
-            <div>{{ this.down || 'v' }}</div>
+            <div>{{ this.up }}</div>
+            <div>{{ this.down }}</div>
         </div>
     </Button>
 </template>
