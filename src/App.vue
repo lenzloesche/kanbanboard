@@ -38,7 +38,10 @@ export default {
     this.updateMainRotatedSize();
     window.addEventListener("orientationchange", () => {
       this.screenOrientation(window.screen);
+      setTimeout(() => {
       this.updateMainRotatedSize();
+    }, 300);    
+
     });
 
   },
