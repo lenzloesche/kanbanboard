@@ -261,6 +261,7 @@ body {
   background-color: black;
 }
 .wrapper{
+  position: fixed;
   width: 100vw;
   height: 100vh;
 }
@@ -275,13 +276,13 @@ body {
 .main-rotated {
     transform: rotate(-90deg)  translateX(-100%);
     transform-origin: top left;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    min-width: 100%;
-    min-height: 100%;
-    max-width: 100%;
-    max-height: 100%;
+
+    width: 100vh;
+    height: 100vw;
+    min-width: 100vh;
+    min-height: 100vw;
+    max-width: 100vh;
+    max-height: 100vw;
     margin:0;
     background-color: white;
     box-sizing: border-box;
