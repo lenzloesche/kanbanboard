@@ -261,7 +261,7 @@ body {
   background-color: black;
 }
 .wrapper{
-  position: fixed;
+  position:static;
   width: 100vw;
   height: 100vh;
 }
