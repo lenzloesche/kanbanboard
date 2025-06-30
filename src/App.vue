@@ -17,6 +17,7 @@ export default {
       editTask:editTaskJS,
       tasks: JSON.parse(JSON.stringify(tasksJS)),
       isPortrait: false,   
+      dragID:-1,
     }
   },
 
@@ -69,7 +70,6 @@ export default {
        
       screenOrientation(screen) {
             if (screen.orientation && screen.orientation.type) {
-              console.log(screen.orientation.type);
               if (screen.orientation.type.startsWith("portrait")) {
                 this.isPortrait = true;
               } else {
@@ -99,8 +99,7 @@ export default {
     startDrag(evt, task) {
       evt.dataTransfer.dropEffect = 'move';
       evt.dataTransfer.effectAllowed = 'move';
-      evt.dataTransfer.setData('taskID', task.id);
-      evt.dataTransfer.setData('text/plain', task.id);
+      this.dragID = task.id;
     },
 
     changeTaskPosition(taskToChangeID,ColumnToChangeTo,orderToChangeTo){
@@ -134,7 +133,7 @@ export default {
       if (evt.target.closest('.task-drop-zone')) return;
       const fakeTaskDroppedOn = {...this.fakeTask};
       fakeTaskDroppedOn.column=column;
-      const taskID = evt.dataTransfer.getData('taskID');
+      const taskID = this.dragID;
       const taskToDrop = this.tasks.find((task) => task.id == taskID);
       const tasksInColumnSorted = this.tasks.filter((task) => task.column == fakeTaskDroppedOn.column && task.id != taskToDrop.id).sort((a,b)=>b.order-a.order);
  
@@ -148,7 +147,7 @@ export default {
 
     changePosition(evt, taskDropped, dropWhere) {
       const taskDroppedOn = {...taskDropped};
-      const taskID = evt.dataTransfer.getData('taskID');
+      const taskID = this.dragID;
       const taskToDrop = {...this.tasks.find((task) => task.id == taskID)};
       if (taskToDrop.id!=taskDroppedOn.id)
         {          
